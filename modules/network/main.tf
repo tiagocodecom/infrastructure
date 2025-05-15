@@ -2,7 +2,7 @@ resource "aws_vpc" "app_vpc" {
   cidr_block = var.vpc_cidr_block
 
   tags = {
-    Name = "${var.project_name}-vpc"
+    "Name" = "${var.project_name}-vpc"
   }
 }
 
@@ -11,7 +11,15 @@ resource "aws_subnet" "app_subnet" {
   cidr_block = var.subnet_cidr_block
 
   tags = {
-    Name = "${var.project_name}-subnet"
+    "Name" = "${var.project_name}-subnet"
+  }
+}
+
+resource "aws_internet_gateway" "app_igw" {
+  vpc_id = aws_vpc.app_vpc.id
+
+  tags = {
+    "Name" = "${var.project_name}-igw"
   }
 }
 

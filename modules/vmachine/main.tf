@@ -9,6 +9,10 @@ resource "aws_instance" "app_instance" {
     volume_size = 40
   }
 
+  depends_on = [
+    var.internet_gateway_id
+  ]
+
   tags = {
     Name = "${var.project_name}-instance"
   }
