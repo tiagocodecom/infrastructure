@@ -40,6 +40,10 @@ module "vmachine" {
   internet_gateway_id = module.network.internet_gateway_id
 }
 
+module "roles" {
+  source = "./modules/roles"
+}
+
 module "monitoring" {
   source       = "./modules/monitoring"
   aws_region   = var.aws_region
