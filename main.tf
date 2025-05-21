@@ -4,6 +4,11 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+
+    cloudinit = {
+      source  = "hashicorp/cloudinit"
+      version = "~> 2.3"
+    }
   }
 
   backend "s3" {
@@ -17,38 +22,48 @@ provider "aws" {
   region = var.aws_region
 }
 
-module "network" {
-  source            = "./modules/network"
+module "aws_vpc" {
+  source            = "./modules/aws_vpc"
   project_name      = var.project_name
   vpc_cidr_block    = var.network_vpc_cidr_block
   subnet_cidr_block = var.network_subnet_cidr_block
 }
 
-module "storage" {
-  source       = "./modules/storage"
+module "aws_s3" {
+  source       = "./modules/aws_s3"
   project_name = var.project_name
 }
 
-module "vmachine" {
-  source              = "./modules/vmachine"
+module "aws_iam" {
+  source       = "./modules/aws_iam"
+  project_name = var.project_name
+}
+
+module "aws_ec2" {
+  source              = "./modules/aws_ec2"
   project_name        = var.project_name
   ami                 = var.vmachine_ami
   instance_type       = var.vmachine_instance_type
-  vpc_id              = module.network.vpc_id
-  subnet_id           = module.network.subnet_id
-  security_groups_ids = [module.network.security_group_id]
-  internet_gateway_id = module.network.internet_gateway_id
+  instance_profile    = module.aws_iam.codedeploy_ec2_profile_name
+  vpc_id              = module.aws_vpc.vpc_id
+  subnet_id           = module.aws_vpc.subnet_id
+  security_groups_ids = module.aws_vpc.security_group_ids
+  internet_gateway_id = module.aws_vpc.internet_gateway_id
 }
 
-module "roles" {
-  source = "./modules/roles"
-}
-
-module "monitoring" {
-  source       = "./modules/monitoring"
+module "aws_cloudwatch" {
+  source       = "./modules/aws_cloudwatch"
   aws_region   = var.aws_region
   project_name = var.project_name
-  instance_id  = module.vmachine.instance_id
-  bucket_id    = module.storage.bucket_id
-  vpc_id       = module.network.vpc_id
+  vpc_id       = module.aws_vpc.vpc_id
+  bucket_id    = module.aws_s3.bucket_id
+  instance_id  = module.aws_ec2.instance_id
+}
+
+module "aws_codedeploy" {
+  source            = "./modules/aws_codedeploy"
+  aws_region        = var.aws_region
+  project_name      = var.project_name
+  instance_name     = module.aws_ec2.instance_name
+  deployer_role_arn = module.aws_iam.codedeploy_ec2_role_arn
 }

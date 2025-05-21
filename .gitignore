@@ -25,3 +25,6 @@ terraform.rc
 # Sensitive variable files
 *.tfvars
 *.tfvars.json
+
+# File created by the pipeline
+infrastructure_plan
