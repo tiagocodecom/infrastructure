@@ -5,6 +5,11 @@ terraform {
       version = "~> 5.0"
     }
 
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 5.5"
+    }
+
     cloudinit = {
       source  = "hashicorp/cloudinit"
       version = "~> 2.3"
@@ -20,6 +25,11 @@ terraform {
 
 provider "aws" {
   region = var.aws_region
+}
+
+provider "cloudflare" {
+  email     = var.cloudflare_email
+  api_token = var.cloudflare_api_token
 }
 
 module "aws_vpc" {
@@ -66,4 +76,11 @@ module "aws_codedeploy" {
   project_name      = var.project_name
   instance_name     = module.aws_ec2.instance_name
   deployer_role_arn = module.aws_iam.codedeploy_ec2_role_arn
+}
+
+module "cloudflare_dns" {
+  source              = "./modules/cloudflare_dns"
+  cloudflare_zone_id  = var.cloudflare_zone_id
+  project_domain_name = var.project_domain_name
+  instance_public_ip  = module.aws_ec2.instance_public_ip
 }

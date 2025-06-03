@@ -32,7 +32,10 @@ jobs:
           terraform plan -input=false \
             -out=infrastructure_plan \
             -var 'project_name=${{ vars.PROJECT_NAME }}' \
-            -var 'aws_region=${{ vars.AWS_REGION }}'
+            -var 'aws_region=${{ vars.AWS_REGION }}' \
+            -var 'cloudflare_email=${{ secrets.CLOUDFLARE_EMAIL }}' \
+            -var 'cloudflare_api_token=${{ secrets.CLOUDFLARE_API_TOKEN }}' \
+            -var 'cloudflare_zone_id=${{ secrets.CLOUDFLARE_TIAGOCODE_ZONE_ID }}'
 
       - name: Apply infrastructure
         run: |

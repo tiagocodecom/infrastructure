@@ -4,10 +4,31 @@ variable "aws_region" {
   description = "The AWS region to deploy resources into."
 }
 
+variable "cloudflare_zone_id" {
+  type        = string
+  description = "The ID of the Cloudflare zone to use for DNS records."
+}
+
+variable "cloudflare_email" {
+  type        = string
+  description = "Email address associated with your Cloudflare account. Required for authenticating with the Cloudflare provider."
+}
+
+variable "cloudflare_api_token" {
+  type        = string
+  description = "Cloudflare API token with permissions to manage DNS records. Used for authenticating with the Cloudflare provider."
+}
+
+variable "project_domain_name" {
+  type        = string
+  default     = "tiagocode.com"
+  description = "The primary domain name used for the project (e.g., for DNS records, TLS certificates, and routing)."
+}
+
 variable "project_name" {
   type        = string
   default     = "tiagocode"
-  description = "The name of the project, used to tag and identify resources."
+  description = "A short, unique identifier for the project. Used to name, group, and tag AWS resources consistently."
 }
 
 variable "network_vpc_cidr_block" {
