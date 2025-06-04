@@ -19,10 +19,19 @@ variable "cloudflare_api_token" {
   description = "Cloudflare API token with permissions to manage DNS records. Used for authenticating with the Cloudflare provider."
 }
 
+variable "project_environment" {
+  type        = string
+  description = "Specifies the environment in which the project is deployed (e.g., development, staging, production)."
+}
+
 variable "project_domain_name" {
   type        = string
-  default     = "tiagocode.com"
   description = "The primary domain name used for the project (e.g., for DNS records, TLS certificates, and routing)."
+}
+
+variable "project_subdomain_prefix" {
+  type        = string
+  description = "The prefix for subdomains used in the project (e.g., 'local-' for local-admin.tiagocode.com)."
 }
 
 variable "project_name" {
@@ -53,4 +62,19 @@ variable "vmachine_ami" {
   type        = string
   default     = "ami-00f34bf9aeacdf007"
   description = "The ID of the Amazon Machine Image (AMI) to use for the virtual machine."
+}
+
+variable "database_name" {
+  type        = string
+  description = "The name of the application's primary database."
+}
+
+variable "database_username" {
+  type        = string
+  description = "The username used to authenticate with the application's database."
+}
+
+variable "database_password" {
+  type        = string
+  description = "The password used to authenticate with the application's database."
 }

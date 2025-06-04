@@ -32,6 +32,17 @@ provider "cloudflare" {
   api_token = var.cloudflare_api_token
 }
 
+module "aws_system_manager" {
+  source                   = "./modules/aws_system_manager"
+  project_environment      = var.project_environment
+  project_name             = var.project_name
+  project_domain_name      = var.project_domain_name
+  project_subdomain_prefix = var.project_subdomain_prefix
+  database_name            = var.database_name
+  database_username        = var.database_username
+  database_password        = var.database_password
+}
+
 module "aws_vpc" {
   source            = "./modules/aws_vpc"
   project_name      = var.project_name
@@ -49,12 +60,17 @@ module "aws_iam" {
   project_name = var.project_name
 }
 
+module "aws_rds" {
+  source       = "./modules/aws_rds"
+  project_name = var.project_name
+}
+
 module "aws_ec2" {
   source              = "./modules/aws_ec2"
   project_name        = var.project_name
   ami                 = var.vmachine_ami
   instance_type       = var.vmachine_instance_type
-  instance_profile    = module.aws_iam.codedeploy_ec2_profile_name
+  instance_profile    = module.aws_iam.ec2_instance_profile_name
   vpc_id              = module.aws_vpc.vpc_id
   subnet_id           = module.aws_vpc.subnet_id
   security_groups_ids = module.aws_vpc.security_group_ids
@@ -75,7 +91,7 @@ module "aws_codedeploy" {
   aws_region        = var.aws_region
   project_name      = var.project_name
   instance_name     = module.aws_ec2.instance_name
-  deployer_role_arn = module.aws_iam.codedeploy_ec2_role_arn
+  deployer_role_arn = module.aws_iam.codedeploy_service_role_arn
 }
 
 module "cloudflare_dns" {

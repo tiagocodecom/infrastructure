@@ -10,7 +10,6 @@ data "cloudflare_zone" "tiagocode_zone" {
   zone_id = var.cloudflare_zone_id
 }
 
-
 resource "cloudflare_dns_record" "root_domain_record" {
   zone_id = data.cloudflare_zone.tiagocode_zone.zone_id
   name    = "@"
