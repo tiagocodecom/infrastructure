@@ -46,3 +46,12 @@ resource "cloudflare_dns_record" "website_subdomain_record" {
   ttl     = 1
   proxied = true
 }
+
+resource "cloudflare_dns_record" "traefik_subdomain_record" {
+  zone_id = data.cloudflare_zone.tiagocode_zone.zone_id
+  name    = "traefik"
+  type    = "A"
+  content = var.instance_public_ip
+  ttl     = 1
+  proxied = true
+}
