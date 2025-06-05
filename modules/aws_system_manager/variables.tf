@@ -77,3 +77,7 @@ variable "service_frontend_api_password" {
 variable "service_frontend_images_url" {
   type = string
 }
+
+variable "github_container_registry_path" {
+  type = string
+}

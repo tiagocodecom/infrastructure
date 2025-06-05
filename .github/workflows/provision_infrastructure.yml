@@ -51,7 +51,8 @@ jobs:
             -var 'service_frontend_images_url=${{ vars.TIAGOCODE_SERVICE_FRONTEND_IMAGES_URL }}' \
             -var 'service_frontend_api_url=${{ vars.TIAGOCODE_SERVICE_FRONTEND_API_URL }}' \
             -var 'service_fronted_api_username=${{ secrets.TIAGOCODE_SERVICE_FRONTEND_API_USERNAME }}' \
-            -var 'service_frontend_api_password=${{ secrets.TIAGOCODE_SERVICE_FRONTEND_API_PASSWORD }}'
+            -var 'service_frontend_api_password=${{ secrets.TIAGOCODE_SERVICE_FRONTEND_API_PASSWORD }}' \
+            -var 'github_container_registry_path=${{ secrets.GHCR_PAT }}'
 
 
       - name: Apply infrastructure

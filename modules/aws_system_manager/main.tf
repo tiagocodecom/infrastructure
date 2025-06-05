@@ -130,3 +130,10 @@ resource "aws_ssm_parameter" "service_frontend_images_url" {
   description = "The URL from which the frontend service loads static images"
   value       = var.service_frontend_images_url
 }
+
+resource "aws_ssm_parameter" "github_container_registry_path" {
+  type        = "SecureString"
+  name        = "/${var.project_name}/ghcr/path"
+  description = "The GitHub Container Registry path used to pull Docker images for the project"
+  value       = var.github_container_registry_path
+}

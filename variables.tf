@@ -132,3 +132,8 @@ variable "service_frontend_images_url" {
   type        = string
   description = "URL used by the frontend to access static image assets."
 }
+
+variable "github_container_registry_path" {
+  type        = string
+  description = "The GitHub Container Registry path used to pull Docker images for the project"
+}

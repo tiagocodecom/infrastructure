@@ -54,6 +54,7 @@ module "aws_system_manager" {
   service_fronted_api_username      = var.service_fronted_api_username
   service_frontend_api_password     = var.service_frontend_api_password
   service_frontend_images_url       = var.service_frontend_images_url
+  github_container_registry_path    = var.github_container_registry_path
 }
 
 module "aws_vpc" {

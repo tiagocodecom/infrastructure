@@ -7,13 +7,21 @@ set -euo pipefail
 sudo dnf update
 sudo dnf install wget ruby -y
 
+# Install Code Deploy agent
 cd /home/ec2-user
-
-echo https://aws-codedeploy-${AWS_REGION}.s3.${AWS_REGION}.amazonaws.com/latest/install
-
 wget https://aws-codedeploy-${AWS_REGION}.s3.${AWS_REGION}.amazonaws.com/latest/install
 chmod +x ./install
 sudo ./install auto
-
 sudo systemctl enable codedeploy-agent
 sudo systemctl start codedeploy-agent
+
+# Install Docker & Docker Compose plugin
+sudo dnf install docker -y
+sudo service docker start
+sudo usermod -aG docker ec2-user
+newgrp docker
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
+sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo docker-compose --version
