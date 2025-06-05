@@ -33,21 +33,34 @@ provider "cloudflare" {
 }
 
 module "aws_system_manager" {
-  source                   = "./modules/aws_system_manager"
-  project_environment      = var.project_environment
-  project_name             = var.project_name
-  project_domain_name      = var.project_domain_name
-  project_subdomain_prefix = var.project_subdomain_prefix
-  database_name            = var.database_name
-  database_username        = var.database_username
-  database_password        = var.database_password
+  source                            = "./modules/aws_system_manager"
+  project_environment               = var.project_environment
+  project_name                      = var.project_name
+  project_domain_name               = var.project_domain_name
+  project_subdomain_prefix          = var.project_subdomain_prefix
+  cloudflare_email                  = var.cloudflare_email
+  cloudflare_api_key                = var.cloudflare_api_key
+  cloudflare_api_token              = var.cloudflare_api_token
+  cloudflare_dns                    = var.cloudflare_dns
+  database_name                     = var.database_name
+  database_username                 = var.database_username
+  database_password                 = var.database_password
+  service_redis_username            = var.service_redis_username
+  service_redis_password            = var.service_redis_password
+  service_traefik_username_password = var.service_traefik_username_password
+  service_drupal_database_prefix    = var.service_drupal_database_prefix
+  service_drupal_hash_salt          = var.service_drupal_hash_salt
+  service_frontend_api_url          = var.service_frontend_api_url
+  service_fronted_api_username      = var.service_fronted_api_username
+  service_frontend_api_password     = var.service_frontend_api_password
+  service_frontend_images_url       = var.service_frontend_images_url
 }
 
 module "aws_vpc" {
   source            = "./modules/aws_vpc"
   project_name      = var.project_name
-  vpc_cidr_block    = var.network_vpc_cidr_block
-  subnet_cidr_block = var.network_subnet_cidr_block
+  vpc_cidr_block    = var.aws_vpc_cidr_block
+  subnet_cidr_block = var.aws_subnet_cidr_block
 }
 
 module "aws_s3" {
@@ -66,10 +79,11 @@ module "aws_rds" {
 }
 
 module "aws_ec2" {
+  aws_region          = var.aws_region
   source              = "./modules/aws_ec2"
   project_name        = var.project_name
-  ami                 = var.vmachine_ami
-  instance_type       = var.vmachine_instance_type
+  ami                 = var.aws_ec2_instance_ami
+  instance_type       = var.aws_ec2_instance_type
   instance_profile    = module.aws_iam.ec2_instance_profile_name
   vpc_id              = module.aws_vpc.vpc_id
   subnet_id           = module.aws_vpc.subnet_id
