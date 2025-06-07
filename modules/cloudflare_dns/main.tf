@@ -17,6 +17,12 @@ resource "cloudflare_dns_record" "root_domain_record" {
   content = var.instance_public_ip
   ttl     = 1
   proxied = true
+
+  lifecycle {
+    ignore_changes = [
+      name,
+    ]
+  }
 }
 
 resource "cloudflare_dns_record" "www_alias_record" {
@@ -26,6 +32,12 @@ resource "cloudflare_dns_record" "www_alias_record" {
   content = var.project_domain_name
   ttl     = 1
   proxied = true
+
+  lifecycle {
+    ignore_changes = [
+      name,
+    ]
+  }
 }
 
 resource "cloudflare_dns_record" "admin_subdomain_record" {
@@ -36,6 +48,12 @@ resource "cloudflare_dns_record" "admin_subdomain_record" {
   ttl     = 1
   proxied = true
 
+  lifecycle {
+    ignore_changes = [
+      name,
+    ]
+  }
+
 }
 
 resource "cloudflare_dns_record" "website_subdomain_record" {
@@ -45,6 +63,12 @@ resource "cloudflare_dns_record" "website_subdomain_record" {
   content = var.instance_public_ip
   ttl     = 1
   proxied = true
+
+  lifecycle {
+    ignore_changes = [
+      name,
+    ]
+  }
 }
 
 resource "cloudflare_dns_record" "traefik_subdomain_record" {
@@ -54,4 +78,10 @@ resource "cloudflare_dns_record" "traefik_subdomain_record" {
   content = var.instance_public_ip
   ttl     = 1
   proxied = true
+
+  lifecycle {
+    ignore_changes = [
+      name,
+    ]
+  }
 }

@@ -19,6 +19,17 @@ resource "aws_ssm_parameter" "project_subdomain_prefix_parameter" {
   value = var.project_domain_name
 }
 
+resource "aws_ssm_parameter" "database_host_parameter" {
+  type = "String"
+  name = "/${var.project_name}/database/host"
+  description = "The hostname or IP address of the database server"
+  value = var.database_host
+
+  depends_on = [
+    var.database_host
+  ]
+}
+
 resource "aws_ssm_parameter" "database_name_parameter" {
   type = "SecureString"
   name = "/${var.project_name}/database/name"

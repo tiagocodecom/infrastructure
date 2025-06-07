@@ -42,6 +42,7 @@ module "aws_system_manager" {
   cloudflare_api_key                = var.cloudflare_api_key
   cloudflare_api_token              = var.cloudflare_api_token
   cloudflare_dns                    = var.cloudflare_dns
+  database_host                     = module.aws_rds.instance_address
   database_name                     = var.database_name
   database_username                 = var.database_username
   database_password                 = var.database_password
@@ -58,10 +59,13 @@ module "aws_system_manager" {
 }
 
 module "aws_vpc" {
-  source            = "./modules/aws_vpc"
-  project_name      = var.project_name
-  vpc_cidr_block    = var.aws_vpc_cidr_block
-  subnet_cidr_block = var.aws_subnet_cidr_block
+  source                      = "./modules/aws_vpc"
+  aws_region                  = var.aws_region
+  project_name                = var.project_name
+  vpc_cidr_block              = var.aws_vpc_cidr_block
+  public_subnet_cidr_block    = var.aws_public_subnet_cidr_block
+  private_subnet_1_cidr_block = var.aws_private_subnet_1_cidr_block
+  private_subnet_2_cidr_block = var.aws_private_subnet_2_cidr_block
 }
 
 module "aws_s3" {
@@ -75,8 +79,17 @@ module "aws_iam" {
 }
 
 module "aws_rds" {
-  source       = "./modules/aws_rds"
-  project_name = var.project_name
+  source                  = "./modules/aws_rds"
+  project_name            = var.project_name
+  instance_class          = var.aws_rds_instance_class
+  instance_engine         = var.aws_rds_instance_engine
+  instance_engine_version = var.aws_rds_instance_engine_version
+  instance_storage_type   = var.aws_rds_instance_storage_type
+  database_name           = var.database_name
+  database_username       = var.database_username
+  database_password       = var.database_password
+  private_subnets_ids     = module.aws_vpc.private_subnet_ids
+  security_groups_ids     = [module.aws_vpc.rds_security_group_id]
 }
 
 module "aws_ec2" {
@@ -87,8 +100,8 @@ module "aws_ec2" {
   instance_type       = var.aws_ec2_instance_type
   instance_profile    = module.aws_iam.ec2_instance_profile_name
   vpc_id              = module.aws_vpc.vpc_id
-  subnet_id           = module.aws_vpc.subnet_id
-  security_groups_ids = module.aws_vpc.security_group_ids
+  subnet_id           = module.aws_vpc.public_subnet_id
+  security_groups_ids = [module.aws_vpc.default_security_group_id]
   internet_gateway_id = module.aws_vpc.internet_gateway_id
 }
 

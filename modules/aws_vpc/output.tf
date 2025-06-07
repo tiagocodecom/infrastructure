@@ -1,16 +1,24 @@
 output "vpc_id" {
-  value = aws_vpc.vpc.id
+  value = aws_vpc.default_vpc.id
 }
 
-output "subnet_id" {
-  value = aws_subnet.subnet.id
+output "public_subnet_id" {
+  value = aws_subnet.public_subnet.id
 }
 
-output "security_group_ids" {
+output "private_subnet_ids" {
   value = [
-    aws_security_group.web_security_group.id,
-    aws_security_group.admin_security_group.id
+    aws_subnet.private_subnet_1.id,
+    aws_subnet.private_subnet_2.id,
   ]
+}
+
+output "default_security_group_id" {
+  value = aws_security_group.default_security_group.id
+}
+
+output "rds_security_group_id" {
+  value = aws_security_group.rds_security_group.id
 }
 
 output "internet_gateway_id" {

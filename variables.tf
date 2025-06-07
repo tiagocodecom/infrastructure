@@ -1,6 +1,19 @@
 variable "aws_region" {
   type        = string
+  default     = "eu-north-1"
   description = "The AWS region to deploy resources into."
+}
+
+variable "aws_availability_zone_1" {
+  type        = string
+  default     = "eu-north-1a"
+  description = "The first availability zone used for deploying resources."
+}
+
+variable "aws_availability_zone_2" {
+  type        = string
+  default     = "eu-north-1b"
+  description = "The second availability zone used for deploying resources."
 }
 
 variable "aws_ec2_instance_ami" {
@@ -15,34 +28,74 @@ variable "aws_ec2_instance_type" {
   description = "The instance type for the virtual machine (e.g., t3.micro)."
 }
 
+variable "aws_rds_instance_engine" {
+  type        = string
+  default     = "postgres"
+  description = "The database engine for the RDS instance (e.g., postgres, mysql)."
+}
+
+variable "aws_rds_instance_engine_version" {
+  type        = string
+  default     = "17.5"
+  description = "The version of the database engine for the RDS instance."
+}
+
+variable "aws_rds_instance_class" {
+  type        = string
+  default     = "db.t4g.micro"
+  description = "The instance class for the RDS instance (e.g., db.t3.micro, db.m5.large)."
+}
+
+variable "aws_rds_instance_storage_type" {
+  type        = string
+  default     = "gp2"
+  description = "The storage type for the RDS instance (e.g., gp2, io1)."
+}
+
 variable "aws_vpc_cidr_block" {
   type        = string
-  default     = "10.10.0.0/16"
+  default     = "10.0.0.0/16"
   description = "The CIDR block to be used for the Virtual Private Cloud (VPC)."
 }
 
-variable "aws_subnet_cidr_block" {
+variable "aws_public_subnet_cidr_block" {
   type        = string
-  default     = "10.10.0.0/18"
-  description = "The CIDR block to be used for the subnet within the VPC."
+  default     = "10.0.0.0/24"
+  description = "The CIDR block to be used for the public subnet within the VPC."
+}
+
+variable "aws_private_subnet_1_cidr_block" {
+  type        = string
+  default     = "10.0.1.0/24"
+  description = "The CIDR block to be used for the private subnet within the VPC."
+}
+
+variable "aws_private_subnet_2_cidr_block" {
+  type        = string
+  default     = "10.0.2.0/24"
+  description = "The CIDR block to be used for the private subnet within the VPC."
 }
 
 variable "cloudflare_zone_id" {
+  sensitive   = true
   type        = string
   description = "The ID of the Cloudflare zone to use for DNS records."
 }
 
 variable "cloudflare_email" {
+  sensitive   = true
   type        = string
   description = "Email address associated with your Cloudflare account. Required for authenticating with the Cloudflare provider."
 }
 
 variable "cloudflare_api_key" {
+  sensitive   = true
   type        = string
   description = "Cloudflare API key for legacy authentication. Use only if not using API token."
 }
 
 variable "cloudflare_api_token" {
+  sensitive   = true
   type        = string
   description = "Cloudflare API token with permissions to manage DNS records. Used for authenticating with the Cloudflare provider."
 }
@@ -74,41 +127,49 @@ variable "project_subdomain_prefix" {
 }
 
 variable "database_name" {
+  sensitive   = true
   type        = string
   description = "The name of the application's primary database."
 }
 
 variable "database_username" {
+  sensitive   = true
   type        = string
   description = "The username used to authenticate with the application's database."
 }
 
 variable "database_password" {
+  sensitive   = true
   type        = string
   description = "The password used to authenticate with the application's database."
 }
 
 variable "service_redis_username" {
+  sensitive   = true
   type        = string
   description = "Username required to access the Redis service instance."
 }
 
 variable "service_redis_password" {
+  sensitive   = true
   type        = string
   description = "Password used to authenticate with the Redis service."
 }
 
 variable "service_traefik_username_password" {
+  sensitive   = true
   type        = string
   description = "Combined username and password (in user:pass format) used for basic auth with the Traefik dashboard."
 }
 
 variable "service_drupal_database_prefix" {
+  sensitive   = true
   type        = string
   description = "Prefix used for Drupal database tables to namespace installations or differentiate environments."
 }
 
 variable "service_drupal_hash_salt" {
+  sensitive   = true
   type        = string
   description = "A secure random string used by Drupal for one-way hashing and securing data (e.g., sessions, passwords)."
 }
@@ -119,11 +180,13 @@ variable "service_frontend_api_url" {
 }
 
 variable "service_fronted_api_username" {
+  sensitive   = true
   type        = string
   description = "Username used by the frontend to authenticate with the backend API."
 }
 
 variable "service_frontend_api_password" {
+  sensitive   = true
   type        = string
   description = "Password used by the frontend to authenticate with the backend API."
 }
@@ -134,6 +197,7 @@ variable "service_frontend_images_url" {
 }
 
 variable "github_container_registry_path" {
+  sensitive   = true
   type        = string
   description = "The GitHub Container Registry path used to pull Docker images for the project"
 }

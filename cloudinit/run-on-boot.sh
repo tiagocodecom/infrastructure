@@ -7,6 +7,9 @@ set -euo pipefail
 sudo dnf update
 sudo dnf install wget ruby -y
 
+# Install Basic utilities
+sudo dnf install telnet htop  -y
+
 # Install Code Deploy agent
 cd /home/ec2-user
 wget https://aws-codedeploy-${AWS_REGION}.s3.${AWS_REGION}.amazonaws.com/latest/install
