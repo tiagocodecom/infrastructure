@@ -84,7 +84,7 @@ variable "service_frontend_api_url" {
   type = string
 }
 
-variable "service_fronted_api_username" {
+variable "service_frontend_api_username" {
   sensitive = true
   type = string
 }

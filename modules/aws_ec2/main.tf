@@ -19,7 +19,8 @@ resource "aws_instance" "ec2_instance" {
   subnet_id = var.subnet_id
   vpc_security_group_ids = var.security_groups_ids
   associate_public_ip_address = true
-
+  key_name = aws_key_pair.ec2_key_pair.id
+  
   user_data_replace_on_change = true
   user_data = data.cloudinit_config.main_config.rendered
 
@@ -43,4 +44,20 @@ resource "aws_eip" "eip" {
   tags = {
     Name = "${var.project_name}-eip"
   }
+}
+
+resource "tls_private_key" "rsa_private_key" {
+  algorithm = "RSA"
+  rsa_bits = 4096 
+}
+
+resource "aws_key_pair" "ec2_key_pair" {
+  key_name = "${var.project_name}-key-pair"
+  public_key = tls_private_key.rsa_private_key.public_key_openssh
+}
+
+resource "local_sensitive_file" "ec2_private_key_file" {
+  content = tls_private_key.rsa_private_key.private_key_pem
+  filename = "${path.root}/${var.project_name}_private_key.pem"
+  file_permission = "0600"
 }

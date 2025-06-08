@@ -14,6 +14,11 @@ terraform {
       source  = "hashicorp/cloudinit"
       version = "~> 2.3"
     }
+
+    tls = {
+      source  = "hashicorp/tls"
+      version = "~> 4"
+    }
   }
 
   backend "s3" {
@@ -53,7 +58,7 @@ module "aws_system_manager" {
   service_drupal_database_prefix    = var.service_drupal_database_prefix
   service_drupal_hash_salt          = var.service_drupal_hash_salt
   service_frontend_api_url          = var.service_frontend_api_url
-  service_fronted_api_username      = var.service_fronted_api_username
+  service_frontend_api_username     = var.service_frontend_api_username
   service_frontend_api_password     = var.service_frontend_api_password
   service_frontend_images_url       = var.service_frontend_images_url
   github_container_registry_pat     = var.github_container_registry_pat

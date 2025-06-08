@@ -1,4 +1,5 @@
 resource "aws_ssm_parameter" "project_name_parameter" {
+  overwrite = true
   type = "String"
   name = "/${var.project_name}/project/name"
   description = "The name of the project, used to namespace configuration and parameters"
@@ -6,6 +7,7 @@ resource "aws_ssm_parameter" "project_name_parameter" {
 }
 
 resource "aws_ssm_parameter" "project_environment_parameter" {
+  overwrite = true
   type = "String"
   name = "/${var.project_name}/project/environment"
   description = "The environment in which the project is running (e.g., development, staging, production)"
@@ -13,6 +15,7 @@ resource "aws_ssm_parameter" "project_environment_parameter" {
 }
 
 resource "aws_ssm_parameter" "project_domain_name_parameter" {
+  overwrite = true
   type = "String"
   name = "/${var.project_name}/project/domain_name"
   description = "The primary domain name used by the project (e.g., tiagocode.com)"
@@ -20,20 +23,15 @@ resource "aws_ssm_parameter" "project_domain_name_parameter" {
 }
 
 resource "aws_ssm_parameter" "project_second_level_domain_parameter" {
+  overwrite = true
   type = "String"
   name = "/${var.project_name}/project/second_level_domain"
   description = ""
   value = var.project_second_level_domain
 }
 
-# resource "aws_ssm_parameter" "project_subdomain_prefix_parameter" {
-#   type = "String"
-#   name = "/${var.project_name}/project/subdomain_prefix"
-#   description = "The prefix used for subdomains related to the project (e.g., local-admin, development-website)"
-#   value = var.project_subdomain_prefix
-# }
-
 resource "aws_ssm_parameter" "database_host_parameter" {
+  overwrite = true
   type = "String"
   name = "/${var.project_name}/database/host"
   description = "The hostname or IP address of the database server"
@@ -45,6 +43,7 @@ resource "aws_ssm_parameter" "database_host_parameter" {
 }
 
 resource "aws_ssm_parameter" "database_name_parameter" {
+  overwrite = true
   type = "SecureString"
   name = "/${var.project_name}/database/name"
   description = "The name of the application's database"
@@ -52,6 +51,7 @@ resource "aws_ssm_parameter" "database_name_parameter" {
 }
 
 resource "aws_ssm_parameter" "database_username_parameter" {
+  overwrite = true
   type = "SecureString"
   name = "/${var.project_name}/database/username"
   description = "The database username used by the application"
@@ -59,6 +59,7 @@ resource "aws_ssm_parameter" "database_username_parameter" {
 }
 
 resource "aws_ssm_parameter" "database_password_parameter" {
+  overwrite = true
   type = "SecureString"
   name = "/${var.project_name}/database/password"
   description = "The database password used by the application"
@@ -76,7 +77,7 @@ resource "aws_ssm_parameter" "cloudflare_api_key" {
   type = "SecureString"
   name = "/${var.project_name}/cloudflare/api_key"
   description = "Cloudflare global API key used for legacy authentication"
-  value = var.cloudflare_api_token
+  value = var.cloudflare_api_key
 }
 
 resource "aws_ssm_parameter" "cloudflare_api_token" {
@@ -111,7 +112,7 @@ resource "aws_ssm_parameter" "service_redis_password" {
   type = "SecureString"
   name = "/${var.project_name}/service-redis/password"
   description = "Redis password used for authenticating access to the Redis service"
-  value = var.service_traefik_username_password
+  value = var.service_redis_password
 }
 
 resource "aws_ssm_parameter" "service_drupal_database_prefix" {
@@ -135,11 +136,11 @@ resource "aws_ssm_parameter" "service_frontend_api_url" {
   value       = var.service_frontend_api_url
 }
 
-resource "aws_ssm_parameter" "service_fronted_api_username" {
+resource "aws_ssm_parameter" "service_frontend_api_username" {
   type        = "SecureString"
   name        = "/${var.project_name}/service-frontend/api_username"
   description = "The username used for accessing the frontend API"
-  value       = var.service_fronted_api_username
+  value       = var.service_frontend_api_username
 }
 
 resource "aws_ssm_parameter" "service_frontend_api_password" {

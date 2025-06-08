@@ -52,11 +52,18 @@ jobs:
             -var 'service_drupal_hash_salt=${{ secrets.TIAGOCODE_DRUPAL_HASH_SALT }}' \
             -var 'service_frontend_images_url=${{ vars.TIAGOCODE_SERVICE_FRONTEND_IMAGES_URL }}' \
             -var 'service_frontend_api_url=${{ vars.TIAGOCODE_SERVICE_FRONTEND_API_URL }}' \
-            -var 'service_fronted_api_username=${{ secrets.TIAGOCODE_SERVICE_FRONTEND_API_USERNAME }}' \
+            -var 'service_frontend_api_username=${{ secrets.TIAGOCODE_SERVICE_FRONTEND_API_USERNAME }}' \
             -var 'service_frontend_api_password=${{ secrets.TIAGOCODE_SERVICE_FRONTEND_API_PASSWORD }}' \
             -var 'github_container_registry_pat=${{ secrets.GHCR_PAT }}'
-
 
       - name: Apply infrastructure
         run: |
           terraform apply "infrastructure_plan"
+
+      - name: Upload .pem key for EC2 instance
+        uses: actions/upload-artifact@v4
+        with:
+          overwrite: true
+          include-hidden-files: true
+          name: ${{ vars.TIAGOCODE_PROJECT_NAME }}_private_key.pem
+          path: ${{ vars.TIAGOCODE_PROJECT_NAME }}_private_key.pem

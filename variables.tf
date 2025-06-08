@@ -184,7 +184,7 @@ variable "service_frontend_api_url" {
   description = "Base URL for the frontend to communicate with the backend API."
 }
 
-variable "service_fronted_api_username" {
+variable "service_frontend_api_username" {
   sensitive   = true
   type        = string
   description = "Username used by the frontend to authenticate with the backend API."
