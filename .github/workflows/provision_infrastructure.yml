@@ -34,6 +34,8 @@ jobs:
             -var 'project_name=${{ vars.TIAGOCODE_PROJECT_NAME }}' \
             -var 'project_environment=${{ vars.TIAGOCODE_PROJECT_ENVIRONMENT }}' \
             -var 'project_domain_name=${{ vars.TIAGOCODE_PROJECT_DOMAIN_NAME }}' \
+            -var 'project_subdomain_prefix=' \
+            -var 'project_second_level_domain=${{ vars.TIAGOCODE_PROJECT_DOMAIN_NAME_2ND_LEVEL }}' \
             -var 'aws_region=${{ vars.AWS_REGION }}' \
             -var 'cloudflare_email=${{ secrets.TIAGOCODE_CLOUDFLARE_EMAIL }}' \
             -var 'cloudflare_dns=${{ secrets.TIAGOCODE_CLOUDFLARE_DNS }}' \
@@ -52,7 +54,7 @@ jobs:
             -var 'service_frontend_api_url=${{ vars.TIAGOCODE_SERVICE_FRONTEND_API_URL }}' \
             -var 'service_fronted_api_username=${{ secrets.TIAGOCODE_SERVICE_FRONTEND_API_USERNAME }}' \
             -var 'service_frontend_api_password=${{ secrets.TIAGOCODE_SERVICE_FRONTEND_API_PASSWORD }}' \
-            -var 'github_container_registry_path=${{ secrets.GHCR_PAT }}'
+            -var 'github_container_registry_pat=${{ secrets.GHCR_PAT }}'
 
 
       - name: Apply infrastructure

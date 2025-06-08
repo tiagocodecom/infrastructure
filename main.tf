@@ -37,7 +37,8 @@ module "aws_system_manager" {
   project_environment               = var.project_environment
   project_name                      = var.project_name
   project_domain_name               = var.project_domain_name
-  project_subdomain_prefix          = var.project_subdomain_prefix
+  project_subdomain_prefix          = var.project_domain_name
+  project_second_level_domain       = var.project_second_level_domain
   cloudflare_email                  = var.cloudflare_email
   cloudflare_api_key                = var.cloudflare_api_key
   cloudflare_api_token              = var.cloudflare_api_token
@@ -55,7 +56,7 @@ module "aws_system_manager" {
   service_fronted_api_username      = var.service_fronted_api_username
   service_frontend_api_password     = var.service_frontend_api_password
   service_frontend_images_url       = var.service_frontend_images_url
-  github_container_registry_path    = var.github_container_registry_path
+  github_container_registry_pat     = var.github_container_registry_pat
 }
 
 module "aws_vpc" {

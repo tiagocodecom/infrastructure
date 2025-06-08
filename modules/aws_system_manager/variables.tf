@@ -10,6 +10,10 @@ variable "project_domain_name" {
   type = string
 }
 
+variable "project_second_level_domain" {
+  type = string
+}
+
 variable "project_subdomain_prefix" {
   type = string
 }
@@ -94,7 +98,7 @@ variable "service_frontend_images_url" {
   type = string
 }
 
-variable "github_container_registry_path" {
+variable "github_container_registry_pat" {
   sensitive = true
   type = string
 }

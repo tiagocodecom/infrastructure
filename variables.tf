@@ -120,6 +120,11 @@ variable "project_domain_name" {
   description = "The primary domain name used for the project (e.g., for DNS records, TLS certificates, and routing)."
 }
 
+variable "project_second_level_domain" {
+  type        = string
+  description = "The second-level domain used in the project, typically the main domain without subdomains (e.g., for admin.tiagocode.com is tiagocode)."
+}
+
 variable "project_subdomain_prefix" {
   type        = string
   default     = ""
@@ -196,8 +201,8 @@ variable "service_frontend_images_url" {
   description = "URL used by the frontend to access static image assets."
 }
 
-variable "github_container_registry_path" {
+variable "github_container_registry_pat" {
   sensitive   = true
   type        = string
-  description = "The GitHub Container Registry path used to pull Docker images for the project"
+  description = "The GitHub Container Registry pat used to pull Docker images for the project"
 }

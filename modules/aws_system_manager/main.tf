@@ -5,6 +5,13 @@ resource "aws_ssm_parameter" "project_name_parameter" {
   value = var.project_name
 }
 
+resource "aws_ssm_parameter" "project_environment_parameter" {
+  type = "String"
+  name = "/${var.project_name}/project/environment"
+  description = "The environment in which the project is running (e.g., development, staging, production)"
+  value = var.project_environment
+}
+
 resource "aws_ssm_parameter" "project_domain_name_parameter" {
   type = "String"
   name = "/${var.project_name}/project/domain_name"
@@ -12,12 +19,19 @@ resource "aws_ssm_parameter" "project_domain_name_parameter" {
   value = var.project_domain_name
 }
 
-resource "aws_ssm_parameter" "project_subdomain_prefix_parameter" {
+resource "aws_ssm_parameter" "project_second_level_domain_parameter" {
   type = "String"
-  name = "/${var.project_name}/project/subdomain_prefix"
-  description = "The prefix used for subdomains related to the project (e.g., local-admin, developemnt-website)"
-  value = var.project_domain_name
+  name = "/${var.project_name}/project/second_level_domain"
+  description = ""
+  value = var.project_second_level_domain
 }
+
+# resource "aws_ssm_parameter" "project_subdomain_prefix_parameter" {
+#   type = "String"
+#   name = "/${var.project_name}/project/subdomain_prefix"
+#   description = "The prefix used for subdomains related to the project (e.g., local-admin, development-website)"
+#   value = var.project_subdomain_prefix
+# }
 
 resource "aws_ssm_parameter" "database_host_parameter" {
   type = "String"
@@ -142,9 +156,9 @@ resource "aws_ssm_parameter" "service_frontend_images_url" {
   value       = var.service_frontend_images_url
 }
 
-resource "aws_ssm_parameter" "github_container_registry_path" {
+resource "aws_ssm_parameter" "github_container_registry_pat" {
   type        = "SecureString"
-  name        = "/${var.project_name}/ghcr/path"
-  description = "The GitHub Container Registry path used to pull Docker images for the project"
-  value       = var.github_container_registry_path
+  name        = "/${var.project_name}/ghcr/pat"
+  description = "The GitHub Container Registry pat used to pull Docker images for the project"
+  value       = var.github_container_registry_pat
 }
