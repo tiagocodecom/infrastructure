@@ -75,8 +75,9 @@ module "aws_vpc" {
 }
 
 module "aws_s3" {
-  source       = "./modules/aws_s3"
-  project_name = var.project_name
+  source              = "./modules/aws_s3"
+  project_name        = var.project_name
+  project_domain_name = var.project_domain_name
 }
 
 module "aws_iam" {
