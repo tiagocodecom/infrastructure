@@ -4,6 +4,18 @@ variable "aws_region" {
   description = "The AWS region to deploy resources into."
 }
 
+variable "aws_access_key" {
+  sensitive   = true
+  type        = string
+  description = "AWS Access Key ID used by Terraform or CI/CD pipelines for authenticated AWS API calls."
+}
+
+variable "aws_secret_key" {
+  sensitive   = true
+  type        = string
+  description = "AWS Secret Access Key paired with the Access Key ID for secure programmatic access."
+}
+
 variable "aws_availability_zone_1" {
   type        = string
   default     = "eu-north-1a"

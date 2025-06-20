@@ -26,7 +26,7 @@ resource "aws_ssm_parameter" "project_second_level_domain_parameter" {
   overwrite = true
   type = "String"
   name = "/${var.project_name}/project/second_level_domain"
-  description = ""
+  description = "The second‑level domain (SLD) portion of the project’s primary domain (e.g., 'tiagocode' for tiagocode.com)"
   value = var.project_second_level_domain
 }
 
@@ -162,4 +162,32 @@ resource "aws_ssm_parameter" "github_container_registry_pat" {
   name        = "/${var.project_name}/ghcr/pat"
   description = "The GitHub Container Registry pat used to pull Docker images for the project"
   value       = var.github_container_registry_pat
+}
+
+resource "aws_ssm_parameter" "aws_region" {
+  type        = "String"
+  name        = "/${var.project_name}/aws/region"
+  description = "AWS region where the project’s infrastructure is deployed (e.g., eu‑north‑1)"
+  value       = var.aws_region
+}
+
+resource "aws_ssm_parameter" "aws_access_key" {
+  type        = "SecureString"
+  name        = "/${var.project_name}/aws/access_key"
+  description = "AWS Access Key ID used by CI/CD or application services to authenticate against AWS APIs"
+  value       = var.aws_access_key
+}
+
+resource "aws_ssm_parameter" "aws_secret_key" {
+  type        = "SecureString"
+  name        = "/${var.project_name}/aws/secret_key"
+  description = "AWS Secret Access Key corresponding to the Access Key ID for programmatic access"
+  value       = var.aws_secret_key
+}
+
+resource "aws_ssm_parameter" "aws_s3_bucket_name" {
+  type        = "String"
+  name        = "/${var.project_name}/aws/s3_bucket_name"
+  description = "S3 bucket name used by the project (e.g., for static assets, logs, or Terraform state)"
+  value       = var.aws_s3_bucket_name
 }

@@ -102,3 +102,21 @@ variable "github_container_registry_pat" {
   sensitive = true
   type = string
 }
+
+variable "aws_region" {
+  type = string
+}
+
+variable "aws_secret_key" {
+  sensitive = true
+  type = string
+}
+
+variable "aws_access_key" {
+  sensitive = true
+  type = string
+}
+
+variable "aws_s3_bucket_name" {
+  type = string
+}

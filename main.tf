@@ -62,6 +62,11 @@ module "aws_system_manager" {
   service_frontend_api_password     = var.service_frontend_api_password
   service_frontend_images_url       = var.service_frontend_images_url
   github_container_registry_pat     = var.github_container_registry_pat
+  aws_region                        = var.aws_region
+  aws_s3_bucket_name                = module.aws_s3.bucket_id
+  // @todo refactor this part, find a better way to bring s3 access to the applications
+  aws_access_key                    = var.aws_access_key
+  aws_secret_key                    = var.aws_secret_key
 }
 
 module "aws_vpc" {
