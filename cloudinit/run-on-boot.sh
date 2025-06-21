@@ -30,4 +30,4 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo docker-compose --version
 
 # Install Postgres
- sudo dnf install postgresql15 -y
+ sudo dnf install postgresql17 -y
