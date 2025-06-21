@@ -9,3 +9,7 @@ output "instance_name" {
 output "instance_public_ip" {
   value = aws_eip.eip.public_ip
 }
+
+output "instance_private_key_pem_content" {
+  value = tls_private_key.rsa_private_key.private_key_pem
+}

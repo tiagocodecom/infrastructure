@@ -29,3 +29,6 @@ terraform.rc
 # File created by the pipeline
 infrastructure_plan
 plan
+
+# Any private key
+*.pem

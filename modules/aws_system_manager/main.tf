@@ -191,3 +191,10 @@ resource "aws_ssm_parameter" "aws_s3_bucket_name" {
   description = "S3 bucket name used by the project (e.g., for static assets, logs, or Terraform state)"
   value       = var.aws_s3_bucket_name
 }
+
+resource "aws_ssm_parameter" "aws_ec2_private_key_pem" {
+  type = "SecureString"
+  name = "/${var.project_name}/aws/ec2_private_key.pem"
+  description = "SSH private key (PEM) for EC2"
+  value = var.aws_ec2_private_key_pem
+}

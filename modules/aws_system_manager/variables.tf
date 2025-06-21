@@ -120,3 +120,8 @@ variable "aws_access_key" {
 variable "aws_s3_bucket_name" {
   type = string
 }
+
+variable "aws_ec2_private_key_pem" {
+  sensitive = true
+  type = string
+}

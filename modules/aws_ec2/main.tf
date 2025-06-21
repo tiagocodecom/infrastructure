@@ -52,12 +52,12 @@ resource "tls_private_key" "rsa_private_key" {
 }
 
 resource "aws_key_pair" "ec2_key_pair" {
-  key_name = "${var.project_name}-key-pair"
+  key_name = "${var.project_name}-ec2-key-pair"
   public_key = tls_private_key.rsa_private_key.public_key_openssh
 }
 
-resource "local_sensitive_file" "ec2_private_key_file" {
-  content = tls_private_key.rsa_private_key.private_key_pem
-  filename = "${path.root}/${var.project_name}_private_key.pem"
-  file_permission = "0600"
-}
+# resource "local_sensitive_file" "ec2_private_key_file" {
+#   content = tls_private_key.rsa_private_key.private_key_pem
+#   filename = "${path.root}/${var.project_name}_private_key.pem"
+#   file_permission = "0600"
+# }

@@ -67,6 +67,7 @@ module "aws_system_manager" {
   // @todo refactor this part, find a better way to bring s3 access to the applications
   aws_access_key                    = var.aws_access_key
   aws_secret_key                    = var.aws_secret_key
+  aws_ec2_private_key_pem = module.aws_ec2.instance_private_key_pem_content
 }
 
 module "aws_vpc" {
