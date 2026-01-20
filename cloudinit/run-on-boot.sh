@@ -31,3 +31,12 @@ sudo docker-compose --version
 
 # Install Postgres
  sudo dnf install postgresql17 -y
+
+ # Add SWAP
+sudo dd if=/dev/zero of=/swapfile bs=128M count=32
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo '/swapfile swap swap defaults 0 0' | sudo tee -a /etc/fstab
+sudo swapon -s
+free -h
