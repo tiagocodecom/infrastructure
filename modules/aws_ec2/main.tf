@@ -24,6 +24,13 @@ resource "aws_instance" "ec2_instance" {
   user_data_replace_on_change = true
   user_data = data.cloudinit_config.main_config.rendered
 
+  root_block_device {
+    volume_size = 20
+    volume_type = "gp3"
+    delete_on_termination = true
+
+  }
+
   depends_on = [
     var.internet_gateway_id
   ]
