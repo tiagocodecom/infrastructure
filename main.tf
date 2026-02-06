@@ -65,8 +65,8 @@ module "aws_system_manager" {
   aws_region                        = var.aws_region
   aws_s3_bucket_name                = module.aws_s3.bucket_id
   // @todo refactor this part, find a better way to bring s3 access to the applications
-  aws_access_key                    = var.aws_access_key
-  aws_secret_key                    = var.aws_secret_key
+  aws_access_key          = var.aws_access_key
+  aws_secret_key          = var.aws_secret_key
   aws_ec2_private_key_pem = module.aws_ec2.instance_private_key_pem_content
 }
 
@@ -133,6 +133,12 @@ module "aws_codedeploy" {
   project_name      = var.project_name
   instance_name     = module.aws_ec2.instance_name
   deployer_role_arn = module.aws_iam.codedeploy_service_role_arn
+}
+
+module "aws_biling_and_cost" {
+  source             = "./modules/aws_billing_and_cost"
+  project_name       = var.project_name
+  notification_email = var.cloudflare_email
 }
 
 module "cloudflare_dns" {
