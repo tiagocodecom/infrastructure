@@ -88,13 +88,13 @@ resource "aws_vpc_security_group_ingress_rule" "https_ingress_rule" {
   to_port = 443
 }
 
-resource "aws_vpc_security_group_ingress_rule" "ssh_ingress_rule" {
-  security_group_id = aws_security_group.default_security_group.id
-  cidr_ipv4 = "0.0.0.0/0"
-  ip_protocol = "tcp"
-  from_port = 22
-  to_port = 22
-}
+# resource "aws_vpc_security_group_ingress_rule" "ssh_ingress_rule" {
+#   security_group_id = aws_security_group.default_security_group.id
+#   cidr_ipv4 = "0.0.0.0/0"
+#   ip_protocol = "tcp"
+#   from_port = 22
+#   to_port = 22
+# }
 
 resource "aws_vpc_security_group_egress_rule" "all_egress_rule" {
   security_group_id = aws_security_group.default_security_group.id
